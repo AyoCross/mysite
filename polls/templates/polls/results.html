@@ -1,0 +1,12 @@
+﻿<h1>{{ question.question_text }}</h1>
+
+<ul>
+一共投出的票数
+{% for choice in question.choice_set.all %}
+    <li>{{ choice.choice_text }} -->>> {{ choice.votes }} vote{{ choice.votes|pluralize }}投票</li>
+{% endfor %}
+</ul>
+
+<a href="{% url 'polls:detail' question.id %}">Vote again?</a>
+<p> </p>
+a href的意思就是来重定向？
