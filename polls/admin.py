@@ -1,27 +1,32 @@
 from django.contrib import admin
 from .models import Question
-from .models import Choice
+from .models import Choicess
 import datetime
 from django.utils.timezone import now
 
 
 class ChoiceInline(admin.TabularInline):  # StackedInline  TabularInline
-    model = Choice
+    model = Choicess
     extra = 2
 
 
 class QuestionAdmin(admin.ModelAdmin):
 
-    # model要实现的功能：只显示pub_date = 11的对象，灵感来自于只显示管理员的帖子。
-    model = Question.objects.filter(pub_date__month=now().month)
+    # model要实现的功能：只显示pub_date = 11的对象，灵感来自于只显示管理员的帖子。********尝试使用manager.py
+    # 在自定义的manager类中重写get_queryset()
+    model = Question.objects.filter(pub_date__startswith='1')  # month=now().month
+
     fieldsets = [
-        (None,          {'fields': ('question_text',)}),
         ('详细信息',    {'fields': ('pub_date', 'just_test'), 'classes': ('collapse',)}),  # 实现hide效果
+        ('问题TEXT',    {'fields': ('question_text',)}),
+        # fields的顺序就是按照这个来
     ]
     inlines = [ChoiceInline]
+    list_per_page = 10
     list_display = ('question_text', 'pub_date', 'was_published_recently')  # 被下面函数顶替了
-    list_filter = ['pub_date']
-    search_field = ['question_text']
+    list_filter = ['pub_date', 'question_text']
+    search_fields = ['question_text']  # 麻蛋我就说怎么不起作用，漏了s...
+    ordering = ('-pub_date',)  # 排序
 
     def get_ques_state(self, obj):
         if obj.pub_date.month != now().month:

@@ -3,7 +3,14 @@ import datetime
 from django.utils import timezone
 
 
+class QuesManager(models.Manager):
+    def get_queryset(self):
+        return super(QuesManager, self).get_queryset().exclude(id__lte=2)
+
+
 class Question(models.Model):
+    objects = QuesManager()  #models.Manager()
+    #other_manager = QuesManager()  # 自定义的管理器，只显示当前月份的内容
     question_text = models.CharField('问题描述', max_length=200)
     pub_date = models.DateTimeField('发表时间')
     just_test = models.CharField('用于测试', max_length=120)
@@ -29,7 +36,7 @@ class Question(models.Model):
     was_published_recently.short_description = '最近发布？'
 
 
-class Choice(models.Model):
+class Choicess(models.Model):
     question = models.ForeignKey(Question)  # '问题',
     choice_text = models.CharField(max_length=200)  # '问题描述',
     votes = models.IntegerField(default=0)  # '投票',

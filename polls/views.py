@@ -4,7 +4,7 @@ from django.core.urlresolvers import reverse
 from django.views import generic
 # from django.template import RequestContext, loader
 
-from .models import Question, Choice
+from .models import Question, Choicess
 
 
 # 使用通用视图来实现
@@ -35,7 +35,7 @@ class ResultsView(generic.DetailView):
 def vote(request, question_id):
     p = get_object_or_404(Question, pk=question_id)
     try:
-        selected_choice = p.choice_set.get(pk=request.POST['choice'])
+        selected_choice = p.choicess_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         # Redisplay the question voting form.
         return render(request, 'polls/detail.html', {
