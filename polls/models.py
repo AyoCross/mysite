@@ -16,6 +16,12 @@ class QuesManager(models.Manager):
 
 
 class Question(models.Model):
+    class Meta:
+        db_table = '问题'  # 更改表名
+        #verbose_name = '问题详情'
+        # verbose_name_plural = 'wenti'
+        # app_label = '投票应用'
+
     # objects = QuesManager()  # models.Manager()
     # other_manager = QuesManager()  # 自定义的管理器，只显示当前月份的内容
     question_text = models.CharField('问题描述', max_length=200)

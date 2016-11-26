@@ -25,12 +25,13 @@ SECRET_KEY = 'g^@ht^8+&-c9$=u-$h&(7bhec4v!$^ya8u*oxroe!t&!clmxh9'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = []  # 允许的域名 比如'www.example.com'
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    #'bootstrapped.bootstrap3_admin'
     'bootstrap_admin',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -40,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls',
 ]
+
+from django.conf import global_settings
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -68,6 +71,8 @@ TEMPLATES = [
         },
     },
 ]
+
+BOOTSTRAP_ADMIN_SIDEBAR_MENU = True  # 添加此句作用：使admin页面实现bootsstrap效果
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
